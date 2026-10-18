@@ -1,0 +1,22 @@
+# 依赖与构建产物
+node_modules/
+out/
+dist/
+release/
+release-*/
+
+# 开发日志 / 个人记忆（含项目排障记录，不外传）
+.workbuddy/
+
+# 已弃用的素材：改用 Canvas 程序化绘制后不再需要
+# archive 有 33MB 原始 mp4/webp，务必排除
+assets/archive/
+assets/animations/
+assets/packs.json
+
+# 系统文件与本地配置
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.local

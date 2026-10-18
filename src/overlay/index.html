@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <title>CursorShooting Overlay</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+        /* 关键：隐藏系统光标，改由 canvas 自绘准星。
+           退出射击模式后鼠标穿透到下层窗口，系统光标自动恢复。 */
+        cursor: none;
+        user-select: none;
+      }
+
+      #stage {
+        position: fixed;
+        inset: 0;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+    <script type="module" src="./renderer.ts"></script>
+  </body>
+</html>

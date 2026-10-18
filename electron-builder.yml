@@ -1,0 +1,54 @@
+appId: com.ryan.cursor-shooting
+productName: CursorShooting
+copyright: Copyright © 2026 Ryan
+
+directories:
+  output: release
+  buildResources: build
+
+# 只打包构建产物与 package.json，源码不进包
+files:
+  - out/**/*
+  - package.json
+
+# 以下资源不进 asar，直接放到 resources/ 下：
+#  - build/  : 图标（托盘图标运行时通过 process.resourcesPath 读取）
+#  - sounds/ : 火箭筒与能量武器的音效（手枪为程序合成音，无需文件）
+# 特效与残留痕迹全部是 Canvas 程序化绘制，没有图片素材需要随包。
+# 注意只列举 sounds/，避免把 assets/archive/（33MB 原始素材）也打进安装包。
+extraResources:
+  - from: build/
+    to: build/
+  - from: assets/sounds/
+    to: assets/sounds/
+
+asar: true
+
+win:
+  icon: build/icon.ico
+  target:
+    - nsis
+    - portable
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  # 不需要管理员权限：全局热键、透明覆盖层、托盘在用户权限下即可工作。
+  # 注意 Windows UIPI 限制——本程序无法覆盖/拦截「以管理员身份运行」的程序，
+  # 若要在这些程序之上生效，需右键以管理员身份运行本程序。
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  # false = 标准安装向导（可选安装路径），true = 一键静默安装
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: CursorShooting
+  uninstallDisplayName: CursorShooting
+  # 2052 = 简体中文；若运行时缺语言包会自动回退英文
+  language: '2052'
+  installerLanguages:
+    - zh_CN
+  deleteAppDataOnUninstall: false
+
+portable:
+  artifactName: ${productName}-${version}-${arch}-portable.${ext}
